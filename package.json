@@ -1,0 +1,14 @@
+{
+  "devDependencies": {
+    "standard": "^10.0.3"
+  },
+  "dependencies": {
+    "express": "^4.16.2",
+    "express-session": "^1.15.6",
+    "mysql2": "^1.5.1",
+    "passport": "^0.4.0",
+    "passport-github2": "^0.1.11",
+    "passport-google-oauth20": "^1.0.0",
+    "sequelize": "^4.28.6"
+  }
+}
