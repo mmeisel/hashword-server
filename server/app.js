@@ -11,11 +11,20 @@ db.authenticate()
 .then(() => console.log('Connection has been established successfully.'))
 .catch(err => console.error('Unable to connect to the database:', err))
 
-app.use(session({
-  secret: 'WhyDoINeedThis?',
+// Set up sessions
+let mySession = session({
+  name: 'sessionId',
+  secret: 'phaexohdae2caehoht3Jieroa7aCheif',
   resave: true,
-  saveUninitialized: true
-}))
+  saveUninitialized: true,
+  cookie: {}
+})
+
+if (app.get('env') === 'production') {
+  mySession.cookie.secure = true
+}
+
+app.use(mySession)
 app.use(passport.initialize())
 app.use(passport.session())
 
