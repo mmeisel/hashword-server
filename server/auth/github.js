@@ -22,7 +22,7 @@ passport.use(new GitHubStrategy(
         email: (profile.emails && profile.emails.length) ? profile.emails[0].value : null
       }
     })
-    .then(done)
+    .spread((user, created) => done(null, user))
   }
 ))
 

@@ -24,7 +24,7 @@ passport.use(new GoogleStrategy(
         email: profile.emails.length ? profile.emails[0].value : null
       }
     })
-    .then(done)
+    .spread((user, created) => done(null, user))
   }
 ))
 
