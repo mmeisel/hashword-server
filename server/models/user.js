@@ -9,15 +9,15 @@ const User = db.define('users',
       primaryKey: true
     },
     provider: {
-      type: Sequelize.STRING,
+      type: Sequelize.ENUM('github', 'google'),
       allowNull: false
     },
     providerId: {
-      type: Sequelize.STRING,
+      type: 'BINARY(32)',
       allowNull: false
     },
     name: {
-      type: Sequelize.STRING,
+      type: 'VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci',
       allowNull: false
     },
     email: {
@@ -25,6 +25,8 @@ const User = db.define('users',
     }
   },
   {
+    charset: 'latin1',
+    collate: 'latin1_swedish_ci',
     indexes: [
       {
         fields: ['provider', 'providerId'],
