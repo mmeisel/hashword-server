@@ -31,7 +31,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 // Views
-app.set('views', './server/views')
+app.set('views', './views')
 app.set('view engine', 'jsx')
 app.engine('jsx', expressReactViews.createEngine())
 
