@@ -2,8 +2,10 @@ const express = require('express')
 const app = express()
 const passport = require('passport')
 const session = require('express-session')
+const expressReactViews = require('express-react-views')
 
-const routes = require('./routes')
+const authRoutes = require('./routes/auth')
+const sitesRoutes = require('./routes/sites')
 const db = require('./db')
 
 // Test the database connection
@@ -28,9 +30,13 @@ app.use(mySession)
 app.use(passport.initialize())
 app.use(passport.session())
 
-// Main routes
-app.use('/', routes)
+// Views
+app.set('views', './server/views')
+app.set('view engine', 'jsx')
+app.engine('jsx', expressReactViews.createEngine())
 
-app.listen(3000, () => console.log('Example app listening on port 3000!'))
+// Routes
+app.use('/auth', authRoutes)
+app.use('/sites', sitesRoutes)
 
 module.exports = app

@@ -3,5 +3,5 @@ const User = require('../models/user')
 
 module.exports = () => {
   passport.serializeUser((user, done) => done(null, user.id))
-  passport.deserializeUser((id, done) => User.findById(id, done))
+  passport.deserializeUser((id, done) => User.findById(id).then(user => done(null, user)))
 }

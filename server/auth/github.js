@@ -9,7 +9,8 @@ passport.use(new GitHubStrategy(
   {
     clientID: config.github.clientID,
     clientSecret: config.github.clientSecret,
-    callbackURL: 'http://localhost:3000/auth/github/callback'
+    callbackURL: 'http://localhost:3000/auth/github/callback',
+    scope: 'user:email'
   },
   (accessToken, refreshToken, profile, done) => {
     User.findOrCreate({

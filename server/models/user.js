@@ -13,7 +13,7 @@ const User = db.define('users',
       allowNull: false
     },
     providerId: {
-      type: 'BINARY(32)',
+      type: Sequelize.STRING(64),
       allowNull: false
     },
     name: {
