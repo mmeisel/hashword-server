@@ -1,9 +1,9 @@
 const React = require('react')
 
 class HelloMessage extends React.Component {
-  render() {
+  render () {
     return (
-      <html lang="en">
+      <html lang='en'>
         <head>
           <title>Success</title>
         </head>
@@ -15,4 +15,4 @@ class HelloMessage extends React.Component {
   }
 }
 
-module.exports = HelloMessage;
+module.exports = HelloMessage

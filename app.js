@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const passport = require('passport')
 const session = require('express-session')
+const bodyParser = require('body-parser')
 const expressReactViews = require('express-react-views')
 
 const authRoutes = require('./routes/auth')
@@ -29,6 +30,9 @@ if (app.get('env') === 'production') {
 app.use(mySession)
 app.use(passport.initialize())
 app.use(passport.session())
+
+// Other middleware
+app.use(bodyParser.json())
 
 // Views
 app.set('views', './views')

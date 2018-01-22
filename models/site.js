@@ -18,9 +18,14 @@ const Site = db.define('sites',
       allowNull: false
     },
     accessDate: {
-      type: Sequelize.INTEGER.UNSIGNED
+      type: Sequelize.INTEGER.UNSIGNED,
+      allowNull: false
     },
     createDate: {
+      type: Sequelize.INTEGER.UNSIGNED,
+      allowNull: false
+    },
+    deleteDate: {
       type: Sequelize.INTEGER.UNSIGNED
     },
     generation: {
@@ -33,6 +38,19 @@ const Site = db.define('sites',
     },
     symbols: {
       type: Sequelize.BOOLEAN,
+      allowNull: false
+    },
+    notes: {
+      type: 'TEXT CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci',
+      allowNull: false
+    },
+    rev: {
+      type: Sequelize.CHAR(8),
+      allowNull: false
+    },
+    history: {
+      // Comma-delimited string of revs
+      type: Sequelize.TEXT,
       allowNull: false
     }
   },

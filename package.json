@@ -10,6 +10,7 @@
     "standard": "^10.0.3"
   },
   "dependencies": {
+    "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "express-react-views": "^0.10.4",
     "express-session": "^1.15.6",
@@ -20,5 +21,10 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "sequelize": "^4.28.6"
+  },
+  "standard": {
+    "ignore": [
+      "/bin"
+    ]
   }
 }
