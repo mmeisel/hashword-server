@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
     domains = Array.isArray(req.query.d) ? req.query.d : [req.query.d]
   }
 
-  service.get(req.user.id, domains, includeSettings)
+  service.get(req.user.id, { domains, includeSettings })
     .then(sites => res.json(sites))
 })
 

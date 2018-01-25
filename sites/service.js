@@ -2,7 +2,7 @@ const Site = require('./site.model')
 
 const siteService = {}
 
-siteService.get = (userId, options) => {
+siteService.get = (userId, options = {}) => {
   let where = { userId }
   let attributes
 
@@ -19,7 +19,7 @@ siteService.get = (userId, options) => {
   return Site.findAll({ where, attributes, transaction: options.transaction })
 }
 
-siteService.sync = (userId, remoteSiteMap, options) => {
+siteService.sync = (userId, remoteSiteMap, options = {}) => {
   return Site.findAll({
     where: { userId, domain: Object.keys(remoteSiteMap) },
     attributes: { exclude: ['createdAt', 'updatedAt'] },
