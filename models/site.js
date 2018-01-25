@@ -18,15 +18,15 @@ const Site = db.define('sites',
       allowNull: false
     },
     accessDate: {
-      type: Sequelize.INTEGER.UNSIGNED,
+      type: Sequelize.BIGINT.UNSIGNED,
       allowNull: false
     },
     createDate: {
-      type: Sequelize.INTEGER.UNSIGNED,
+      type: Sequelize.BIGINT.UNSIGNED,
       allowNull: false
     },
     deleteDate: {
-      type: Sequelize.INTEGER.UNSIGNED
+      type: Sequelize.BIGINT.UNSIGNED
     },
     generation: {
       type: Sequelize.INTEGER.UNSIGNED,
@@ -51,18 +51,19 @@ const Site = db.define('sites',
     history: {
       // Comma-delimited string of revs
       type: Sequelize.TEXT,
-      allowNull: false
+      allowNull: false,
+      get () {
+        return this.getDataValue('history').split(',')
+      },
+      set (val) {
+        this.setDataValue('history', val.join(','))
+      }
     }
   },
   {
     charset: 'latin1',
     collate: 'latin1_swedish_ci',
-    indexes: [
-      {
-        fields: ['userId', 'domain'],
-        unique: true
-      }
-    ]
+    indexes: [{ fields: ['userId', 'domain'], unique: true }]
   }
 )
 
