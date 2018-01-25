@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const sequelize = require('../db')
-const siteService = require('../services/site-service')
+const service = require('./service')
 
 router.get('/', (req, res) => {
   // By default, only return the domains and their revs. Only if the "settings" request parameter is
@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
     domains = Array.isArray(req.query.d) ? req.query.d : [req.query.d]
   }
 
-  siteService.get(req.user.id, domains, includeSettings)
+  service.get(req.user.id, domains, includeSettings)
     .then(sites => res.json(sites))
 })
 
@@ -23,7 +23,7 @@ router.get('/', (req, res) => {
 router.patch('/', (req, res) => {
   // TODO: validate body format (either here or in the service)
   sequelize.transaction(transaction => {
-    siteService.sync(req.user.id, req.body, { transaction })
+    service.sync(req.user.id, req.body, { transaction })
   })
   .then(result => res.json(result))
   .catch(error => res.json({ error }))

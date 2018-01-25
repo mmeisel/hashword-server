@@ -1,7 +1,7 @@
 const passport = require('passport')
 const GitHubStrategy = require('passport-github2').Strategy
 
-const User = require('../models/user')
+const User = require('../users/user.model')
 const config = require('../_config')
 const init = require('./init')
 

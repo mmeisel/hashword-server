@@ -1,4 +1,4 @@
-const Site = require('../models/site')
+const Site = require('./site.model')
 
 const siteService = {}
 

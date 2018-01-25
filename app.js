@@ -5,8 +5,8 @@ const session = require('express-session')
 const bodyParser = require('body-parser')
 const expressReactViews = require('express-react-views')
 
-const authRoutes = require('./routes/auth')
-const sitesRoutes = require('./routes/sites')
+const authRoutes = require('./auth/routes')
+const sitesRoutes = require('./sites/routes')
 const db = require('./db')
 
 // Test the database connection
