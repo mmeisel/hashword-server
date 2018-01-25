@@ -53,10 +53,15 @@ const Site = db.define('sites',
       type: Sequelize.TEXT,
       allowNull: false,
       get () {
-        return this.getDataValue('history').split(',')
+        const val = this.getDataValue('history')
+        return val == null ? val : val.split(',')
       },
       set (val) {
-        this.setDataValue('history', val.join(','))
+        if (Array.isArray(val)) {
+          this.setDataValue('history', val.join(','))
+        } else if (typeof val === 'string') {
+          this.setDataValue('history', val)
+        }
       }
     }
   },
