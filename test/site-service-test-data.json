@@ -1,0 +1,63 @@
+[
+  {
+    "model": "users",
+    "data": {
+      "id": 1,
+      "provider": "google",
+      "providerId": "12345",
+      "name": "Bozo Clown",
+      "email": "bozo@clown.com"
+    }
+  },
+  {
+    "model": "sites",
+    "data": {
+      "id": 1,
+      "userId": 1,
+      "domain": "example.com",
+      "accessDate": 1516754869000,
+      "createDate": 1516754869000,
+      "deleteDate": null,
+      "generation": 1,
+      "pwLength": 16,
+      "symbols": true,
+      "notes": "",
+      "rev": "22222222",
+      "history": "00000000,11111111"
+    }
+  },
+  {
+    "model": "sites",
+    "data": {
+      "id": 2,
+      "userId": 1,
+      "domain": "deleted.com",
+      "accessDate": 1516754869000,
+      "createDate": 1516754869000,
+      "deleteDate": 1516754869000,
+      "generation": 1,
+      "pwLength": 16,
+      "symbols": true,
+      "notes": "",
+      "rev": "22222222",
+      "history": "00000000,11111111"
+    }
+  },
+  {
+    "model": "sites",
+    "data": {
+      "id": 3,
+      "userId": 1,
+      "domain": "google.com",
+      "accessDate": 1516754869000,
+      "createDate": 1516754869000,
+      "deleteDate": null,
+      "generation": 1,
+      "pwLength": 16,
+      "symbols": true,
+      "notes": "",
+      "rev": "22222222",
+      "history": "00000000,11111111"
+    }
+  }
+]
