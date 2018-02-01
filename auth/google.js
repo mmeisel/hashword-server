@@ -1,7 +1,7 @@
 const passport = require('passport')
 const GoogleStrategy = require('passport-google-oauth20').Strategy
 
-const User = require('../users/user.model')
+const db = require('../db')
 const config = require('../_config')
 const init = require('./init')
 
@@ -14,7 +14,7 @@ passport.use(new GoogleStrategy(
     scope: 'profile email openid'
   },
   (accessToken, refreshToken, profile, done) => {
-    User.findOrCreate({
+    db.User.findOrCreate({
       where: {
         provider: 'google',
         providerId: profile.id

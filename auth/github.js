@@ -1,7 +1,7 @@
 const passport = require('passport')
 const GitHubStrategy = require('passport-github2').Strategy
 
-const User = require('../users/user.model')
+const db = require('../db')
 const config = require('../_config')
 const init = require('./init')
 
@@ -13,7 +13,7 @@ passport.use(new GitHubStrategy(
     scope: 'user:email'
   },
   (accessToken, refreshToken, profile, done) => {
-    User.findOrCreate({
+    db.User.findOrCreate({
       where: {
         provider: 'github',
         providerId: profile.id

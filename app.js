@@ -10,7 +10,8 @@ const sitesRoutes = require('./sites/routes')
 const db = require('./db')
 
 // Test the database connection
-db.authenticate()
+db.sequelize.authenticate()
+.then(() => db.sequelize.sync())
 .then(() => console.log('Connection has been established successfully.'))
 .catch(err => console.error('Unable to connect to the database:', err))
 
