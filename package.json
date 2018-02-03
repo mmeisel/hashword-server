@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "./node_modules/.bin/nodemon ./bin/www",
-    "test": "mocha \"*/{spec,*.spec}.js\""
+    "test": "NODE_ENV=test mocha \"*/{spec,*.spec}.js\""
   },
   "devDependencies": {
     "chai": "^4.1.2",
@@ -16,6 +16,8 @@
   },
   "dependencies": {
     "body-parser": "^1.18.2",
+    "convict": "^4.0.2",
+    "dotenv": "^5.0.0",
     "express": "^4.16.2",
     "express-react-views": "^0.10.5",
     "express-session": "^1.15.6",

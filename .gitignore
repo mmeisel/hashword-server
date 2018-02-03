@@ -27,4 +27,5 @@ node_modules/
 .DS_Store
 
 # Config with sensitive data
-_config.js
+config/
+

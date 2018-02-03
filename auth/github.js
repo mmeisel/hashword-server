@@ -2,7 +2,7 @@ const passport = require('passport')
 const GitHubStrategy = require('passport-github2').Strategy
 
 const db = require('../db')
-const config = require('../_config')
+const config = require('../config')
 const init = require('./init')
 
 passport.use(new GitHubStrategy(

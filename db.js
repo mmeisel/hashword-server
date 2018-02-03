@@ -1,7 +1,10 @@
 const Sequelize = require('sequelize')
-const config = require('./_config')
+const config = require('./config')
 
-const sequelize = new Sequelize(Object.assign(config.database, { operatorsAliases: {} }))
+const sequelize = new Sequelize(config.database.uri, {
+  password: config.database.password,
+  operatorsAliases: {}
+})
 
 const db = {
   sequelize,
