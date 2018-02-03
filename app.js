@@ -21,8 +21,7 @@ let mySession = session({
   name: 'sessionId',
   secret: 'phaexohdae2caehoht3Jieroa7aCheif',
   store: new SequelizeStore({
-    db: db.sequelize,
-    table: 'sessions'
+    db: db.sequelize
   }),
   resave: false,
   saveUninitialized: true,
@@ -47,6 +46,16 @@ app.engine('jsx', expressReactViews.createEngine())
 
 // Routes
 app.use('/auth', authRoutes)
-app.use('/sites', sitesRoutes)
+
+// Require autentication for all requests to /api/
+app.use('/api', (req, res, next) => {
+  if (req.user == null) {
+    res.status(403).json({ error: 'Not authenticated' })
+  } else {
+    next()
+  }
+})
+
+app.use('/api/sites', sitesRoutes)
 
 module.exports = app
