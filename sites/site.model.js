@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       },
       domain: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(255),
         allowNull: false
       },
       accessDate: {
@@ -38,7 +38,9 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       },
       notes: {
-        type: 'TEXT CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci',
+        type: sequelize.getDialect() === 'mysql'
+              ? 'TEXT CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci'
+              : DataTypes.TEXT,
         allowNull: false
       },
       rev: {
