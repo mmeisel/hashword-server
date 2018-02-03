@@ -1,11 +1,11 @@
 const express = require('express')
 const app = express()
-const passport = require('passport')
 const session = require('express-session')
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
 const bodyParser = require('body-parser')
 const expressReactViews = require('express-react-views')
 
+const authInit = require('./auth/init')
 const authRoutes = require('./auth/routes')
 const sitesRoutes = require('./sites/routes')
 const db = require('./db')
@@ -33,8 +33,7 @@ if (app.get('env') === 'production') {
 }
 
 app.use(mySession)
-app.use(passport.initialize())
-app.use(passport.session())
+authInit(app)
 
 // Other middleware
 app.use(bodyParser.json())

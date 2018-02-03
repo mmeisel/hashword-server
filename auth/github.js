@@ -3,7 +3,6 @@ const GitHubStrategy = require('passport-github2').Strategy
 
 const db = require('../db')
 const config = require('../config')
-const init = require('./init')
 
 passport.use(new GitHubStrategy(
   {
@@ -26,8 +25,5 @@ passport.use(new GitHubStrategy(
     .spread((user, created) => done(null, user))
   }
 ))
-
-// Serialize user into the session
-init()
 
 module.exports = passport

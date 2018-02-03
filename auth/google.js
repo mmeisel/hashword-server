@@ -3,7 +3,6 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy
 
 const db = require('../db')
 const config = require('../config')
-const init = require('./init')
 
 passport.use(new GoogleStrategy(
   {
@@ -27,8 +26,5 @@ passport.use(new GoogleStrategy(
     .spread((user, created) => done(null, user))
   }
 ))
-
-// Serialize user into the session
-init()
 
 module.exports = passport
