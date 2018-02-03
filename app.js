@@ -3,7 +3,6 @@ const app = express()
 const session = require('express-session')
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
 const bodyParser = require('body-parser')
-const expressReactViews = require('express-react-views')
 
 const authInit = require('./auth/init')
 const authRoutes = require('./auth/routes')
@@ -37,11 +36,6 @@ authInit(app)
 
 // Other middleware
 app.use(bodyParser.json())
-
-// Views
-app.set('views', './views')
-app.set('view engine', 'jsx')
-app.engine('jsx', expressReactViews.createEngine())
 
 // Routes
 app.use('/auth', authRoutes)

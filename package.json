@@ -20,14 +20,11 @@
     "convict": "^4.0.2",
     "dotenv": "^5.0.0",
     "express": "^4.16.2",
-    "express-react-views": "^0.10.5",
     "express-session": "^1.15.6",
     "mysql2": "^1.5.1",
     "passport": "^0.4.0",
     "passport-github2": "^0.1.11",
     "passport-google-oauth20": "^1.0.0",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
     "sequelize": "^4.28.6"
   },
   "standard": {
