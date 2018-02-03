@@ -9,6 +9,11 @@ const config = convict({
     default: 'development',
     env: 'NODE_ENV'
   },
+  port: {
+    format: 'port',
+    default: 3000,
+    env: 'PORT'
+  },
   database: {
     uri: {
       format: String,
@@ -19,6 +24,19 @@ const config = convict({
       format: String,
       default: '',
       env: 'DATABASE_PASSWORD',
+      sensitive: true
+    }
+  },
+  session: {
+    maxAge: {
+      format: 'nat',
+      default: 86400000,
+      env: 'SESSION_MAX_AGE'
+    },
+    secret: {
+      format: String,
+      default: null,
+      env: 'SESSION_SECRET',
       sensitive: true
     }
   },

@@ -8,6 +8,7 @@ const authInit = require('./auth/init')
 const authRoutes = require('./auth/routes')
 const sitesRoutes = require('./sites/routes')
 const db = require('./db')
+const config = require('./config')
 
 // Test the database connection
 db.sequelize.authenticate()
@@ -18,16 +19,18 @@ db.sequelize.authenticate()
 // Set up sessions
 let mySession = session({
   name: 'sessionId',
-  secret: 'phaexohdae2caehoht3Jieroa7aCheif',
+  secret: config.session.secret,
   store: new SequelizeStore({
     db: db.sequelize
   }),
   resave: false,
   saveUninitialized: true,
-  cookie: {}
+  cookie: {
+    maxAge: config.session.maxAge
+  }
 })
 
-if (app.get('env') === 'production') {
+if (config.env === 'production') {
   mySession.cookie.secure = true
 }
 
