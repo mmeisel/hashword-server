@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const passport = require('passport')
 const session = require('express-session')
+const SequelizeStore = require('connect-session-sequelize')(session.Store)
 const bodyParser = require('body-parser')
 const expressReactViews = require('express-react-views')
 
@@ -19,7 +20,11 @@ db.sequelize.authenticate()
 let mySession = session({
   name: 'sessionId',
   secret: 'phaexohdae2caehoht3Jieroa7aCheif',
-  resave: true,
+  store: new SequelizeStore({
+    db: db.sequelize,
+    table: 'sessions'
+  }),
+  resave: false,
   saveUninitialized: true,
   cookie: {}
 })
