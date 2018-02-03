@@ -16,7 +16,23 @@ siteService.get = (userId, options = {}) => {
     attributes = ['domain', 'rev']
   }
 
-  return db.Site.findAll({ where, attributes, transaction: options.transaction })
+  return db.User.findOne({
+    where: { id: userId },
+    include: [{
+      model: db.Site,
+      required: false,
+      where,
+      attributes
+    }],
+    transaction: options.transaction
+  })
+  .then(user => {
+    if (user == null) {
+      throw new Error('Invalid user')
+    }
+
+    return user.sites
+  })
 }
 
 siteService.sync = (userId, remoteSiteMap, options = {}) => {

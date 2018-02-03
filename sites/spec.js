@@ -31,8 +31,16 @@ describe('siteService', () => {
   SequelizeMocking.sequelizeMockingMocha(db.sequelize, testDataFile, { logging: false })
 
   describe('#get()', () => {
-    it('should return nothing for an invalid user', () => {
-      return service.get(666).then(sites => expect(sites).to.be.an('array').that.is.empty())
+    it('should throw for an invalid user', done => {
+      service.sync(666, {})
+        .then(result => done(new Error('Result returned: ' + JSON.stringify(result))))
+        .catch(err => {
+          if (err.message === 'Invalid user') {
+            done()
+          } else {
+            done(err)
+          }
+        })
     })
 
     it('should return domain and rev for all domains for a valid user', () => {
