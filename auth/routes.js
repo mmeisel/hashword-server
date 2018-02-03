@@ -1,19 +1,32 @@
 const router = require('express').Router()
-const passportGithub = require('../auth/github')
-const passportGoogle = require('../auth/google')
+const strategies = {
+  github: require('./github'),
+  google: require('./google')
+}
 
-router.get('/github', passportGithub.authenticate('github'))
+Object.keys(strategies).forEach(strategyName => {
+  const strategy = strategies[strategyName]
 
-router.get('/github/callback',
-  passportGithub.authenticate('github', { failureRedirect: '/login-failure.html' }),
-  (req, res) => res.render('login-success', { user: req.user })
-)
+  router.get(`/${strategyName}`, strategy.authenticate(strategyName))
 
-router.get('/google', passportGoogle.authenticate('google'))
+  router.get(`/${strategyName}/callback`, strategy.authenticate(strategyName, {
+    successRedirect: '../success',
+    failureRedirect: '../fail'
+  }))
+})
 
-router.get('/google/callback',
-  passportGoogle.authenticate('google', { failureRedirect: '/login-failure.html' }),
-  (req, res) => res.render('login-success', { user: req.user })
-)
+router.get('/fail', (req, res) => {
+  res.status(403).json({ error: 'Login failed' })
+})
+
+router.get('/success', (req, res) => {
+  res.json({
+    user: {
+      name: req.user.name,
+      email: req.user.email,
+      provider: req.user.provider
+    }
+  })
+})
 
 module.exports = router
