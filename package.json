@@ -1,6 +1,7 @@
 {
   "name": "hashword-server",
   "version": "0.0.0",
+  "licence": "GPL-3.0",
   "private": true,
   "scripts": {
     "start": "./node_modules/.bin/nodemon ./bin/www",
