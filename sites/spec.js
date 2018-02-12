@@ -45,19 +45,19 @@ describe('siteService', () => {
 
     it('should return domain and rev for all domains for a valid user', () => {
       return service.get(1).then(sites => {
-        return expect(JSON.parse(JSON.stringify(sites))).to.have.deep.members([
-          { domain: 'example.com', rev: '22222222' },
-          { domain: 'deleted.com', rev: '22222222' },
-          { domain: 'google.com', rev: '22222222' }
-        ])
+        return expect(JSON.parse(JSON.stringify(sites))).to.deep.equal({
+          'example.com': { rev: '22222222' },
+          'deleted.com': { rev: '22222222' },
+          'google.com': { rev: '22222222' }
+        })
       })
     })
 
     it('should return domain and rev for valid, specified domains for a valid user', () => {
       return service.get(1, { domains: ['example.com', 'nonexistant.com'] }).then(sites => {
-        return expect(JSON.parse(JSON.stringify(sites))).to.have.deep.members([
-          { domain: 'example.com', rev: '22222222' }
-        ])
+        return expect(JSON.parse(JSON.stringify(sites))).to.deep.equal({
+          'example.com': { rev: '22222222' }
+        })
       })
     })
 
@@ -65,9 +65,11 @@ describe('siteService', () => {
       return service.get(1, { includeSettings: true }).then(sites => {
         const rawSites = JSON.parse(JSON.stringify(sites))
 
-        expect(rawSites).to.have.lengthOf(3)
+        expect(Object.keys(rawSites)).to.have.lengthOf(3)
 
-        rawSites.forEach(site => {
+        Object.keys(rawSites).forEach(domain => {
+          const site = rawSites[domain]
+
           expect(site).to.have.property('pwLength').that.is.a('number')
           expect(site).to.have.property('generation').that.is.a('number')
           expect(site).to.have.property('symbols').that.is.a('boolean')
@@ -80,9 +82,11 @@ describe('siteService', () => {
       return service.get(1, { includeSettings: true, domains: ['example.com', 'nonexistant.com'] }).then(sites => {
         const rawSites = JSON.parse(JSON.stringify(sites))
 
-        expect(rawSites).to.have.lengthOf(1)
+        expect(Object.keys(rawSites)).to.have.lengthOf(1)
 
-        rawSites.forEach(site => {
+        Object.keys(rawSites).forEach(domain => {
+          const site = rawSites[domain]
+
           expect(site).to.have.property('pwLength').that.is.a('number')
           expect(site).to.have.property('generation').that.is.a('number')
           expect(site).to.have.property('symbols').that.is.a('boolean')

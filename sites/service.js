@@ -31,7 +31,10 @@ siteService.get = (userId, options = {}) => {
       throw new Error('Invalid user')
     }
 
-    return user.sites
+    const output = {}
+
+    user.sites.forEach(site => (output[site.domain] = localToRemote(site)))
+    return output
   })
 }
 
@@ -80,7 +83,9 @@ siteService.sync = (userId, remoteSiteMap, options = {}) => {
 
     const remoteUpdateMap = {}
     // Add remoteOnly to localUpdates so they'll be inserted
-    const localUpdates = Object.keys(remoteOnly).map(domain => remoteToLocal(domain, remoteSiteMap[domain]))
+    const localUpdates = Object.keys(remoteOnly).map(domain => {
+      return remoteToLocal(domain, remoteSiteMap[domain], userId)
+    })
     const conflictMap = {}
 
     // Add localOnly to remoteUpdateMap so the remote will update them
@@ -99,7 +104,7 @@ siteService.sync = (userId, remoteSiteMap, options = {}) => {
           remoteUpdateMap[domain] = localToRemote(match.local)
         } else if (match.remote.history.includes(match.local.rev)) {
           // They have a newer version remotely, replace the local version
-          localUpdates.push(remoteToLocal(domain, match.remote, match.local.id))
+          localUpdates.push(remoteToLocal(domain, match.remote, userId, match.local.id))
         } else {
           // There's a conflict, put our version in the "rejected" list
           conflictMap[domain] = localToRemote(match.local)
@@ -135,24 +140,24 @@ siteService.sync = (userId, remoteSiteMap, options = {}) => {
 
     return output
   })
+}
 
-  function localToRemote (localSettings) {
-    return Object.assign({}, localSettings.toJSON(), {
-      id: undefined,
-      userId: undefined,
-      domain: undefined
-    })
-  }
+function localToRemote (localSettings) {
+  return Object.assign(localSettings.toJSON(), {
+    id: undefined,
+    userId: undefined,
+    domain: undefined
+  })
+}
 
-  function remoteToLocal (domain, remoteSettings, localId) {
-    return Object.assign({}, remoteSettings, {
-      id: localId,
-      userId,
-      domain,
-      updatedAt: undefined,
-      createdAt: undefined
-    })
-  }
+function remoteToLocal (domain, remoteSettings, userId, localId) {
+  return Object.assign({}, remoteSettings, {
+    id: localId,
+    userId,
+    domain,
+    updatedAt: undefined,
+    createdAt: undefined
+  })
 }
 
 module.exports = siteService
