@@ -13,7 +13,7 @@ siteService.get = (userId, options = {}) => {
   if (options.includeSettings) {
     attributes = { exclude: ['id', 'userId', 'createdAt', 'updatedAt'] }
   } else {
-    attributes = ['domain', 'rev']
+    attributes = ['domain', 'rev', 'accessDate']
   }
 
   return db.User.findOne({
@@ -97,7 +97,16 @@ siteService.sync = (userId, remoteSiteMap, options = {}) => {
     Object.keys(matches).forEach(domain => {
       const match = matches[domain]
 
-      if (match.local.rev !== match.remote.rev) {
+      if (match.local.rev === match.remote.rev) {
+        // When the rev is the same, ensure the accessDate is up-to-date
+        // TODO: should we sanity-check these dates at all? We can't sanity-check the deleteDate
+        //       very easily since it's in the rev...
+        if (match.local.accessDate < match.remote.accessDate) {
+          localUpdates.push(remoteToLocal(domain, match.remote, userId, match.local.id))
+        } else if (match.local.accessDate > match.remote.accessDate) {
+          remoteUpdateMap[domain] = localToRemote(match.local)
+        }
+      } else {
         // Check for ancestry
         if (match.local.history.includes(match.remote.rev)) {
           // We have a newer version locally, send this to the remote

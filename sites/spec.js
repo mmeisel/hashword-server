@@ -27,6 +27,7 @@ describe('siteService', () => {
     notes: '',
     rev: '22222222'
   }
+  const standardRevAndAccessDate = { rev: '22222222', accessDate: 1516754869000 }
 
   SequelizeMocking.sequelizeMockingMocha(db.sequelize, testDataFile, { logging: false })
 
@@ -43,12 +44,12 @@ describe('siteService', () => {
         })
     })
 
-    it('should return domain and rev for all domains for a valid user', () => {
+    it('should return domain, rev, and accessDate for all domains for a valid user', () => {
       return service.get(1).then(sites => {
         return expect(JSON.parse(JSON.stringify(sites))).to.deep.equal({
-          'example.com': { rev: '22222222' },
-          'deleted.com': { rev: '22222222' },
-          'google.com': { rev: '22222222' }
+          'example.com': standardRevAndAccessDate,
+          'deleted.com': standardRevAndAccessDate,
+          'google.com': standardRevAndAccessDate
         })
       })
     })
@@ -56,7 +57,7 @@ describe('siteService', () => {
     it('should return domain and rev for valid, specified domains for a valid user', () => {
       return service.get(1, { domains: ['example.com', 'nonexistant.com'] }).then(sites => {
         return expect(JSON.parse(JSON.stringify(sites))).to.deep.equal({
-          'example.com': { rev: '22222222' }
+          'example.com': standardRevAndAccessDate
         })
       })
     })
@@ -199,6 +200,78 @@ describe('siteService', () => {
         expect(result).to.deep.equal({
           accepted: [],
           rejected: { 'example.com': exampleComLocalSettings },
+          changed: {}
+        })
+      })
+    })
+
+    it('should accept domains with the same rev but newer accessDate', () => {
+      const remoteData = {
+        'example.com': {
+          history: ['00000000', '11111111'],
+          accessDate: 1518406775000,
+          createDate: 1516754869000,
+          deleteDate: null,
+          generation: 1,
+          pwLength: 16,
+          symbols: true,
+          notes: '',
+          rev: '22222222'
+        }
+      }
+
+      return service.sync(1, remoteData).then(result => {
+        expect(result).to.deep.equal({
+          accepted: ['example.com'],
+          rejected: {},
+          changed: {}
+        })
+      })
+    })
+
+    it('should change remote domains with the same rev but older accessDate', () => {
+      const remoteData = {
+        'example.com': {
+          history: ['00000000', '11111111'],
+          accessDate: 1516754500000,
+          createDate: 1516754869000,
+          deleteDate: null,
+          generation: 1,
+          pwLength: 16,
+          symbols: true,
+          notes: '',
+          rev: '22222222'
+        }
+      }
+
+      return service.sync(1, remoteData).then(result => {
+        expect(result).to.deep.equal({
+          accepted: [],
+          rejected: {},
+          changed: { 'example.com': exampleComLocalSettings }
+        })
+      })
+    })
+
+    it('should ignore domains where the local and remote are identical', () => {
+      const remoteData = {
+        'example.com': {
+          history: ['00000000', '11111111'],
+          accessDate: 1516754869000,
+          createDate: 1516754869000,
+          deleteDate: null,
+          generation: 1,
+          pwLength: 16,
+          symbols: true,
+          notes: '',
+          rev: '22222222'
+        }
+      }
+
+      return service.sync(1, remoteData).then(result => {
+        expect(result).to.deep.equal({
+          accepted: [],
+          rejected: {},
           changed: {}
         })
       })
