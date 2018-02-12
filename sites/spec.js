@@ -157,6 +157,29 @@ describe('siteService', () => {
       })
     })
 
+    it('should not accept sensitive data from the remote', () => {
+      const remoteData = {
+        'example.com': {
+          id: 666,
+          userId: 666,
+          domain: 'notexample.com',
+          history: ['00000000', '11111111', '22222222', '33333333'],
+          accessDate: new Date().getTime(),
+          createDate: 1516754869000,
+          deleteDate: null,
+          generation: 2,
+          pwLength: 16,
+          symbols: true,
+          notes: '',
+          rev: '44444444'
+        }
+      }
+
+      return service.sync(1, remoteData).then(() => {
+        return db.Site.findOne({ where: { userId: 1, domain: 'example.com' } })
+      })
+    })
+
     it('should change remote domains when the local is newer', () => {
       const remoteData = {
         'example.com': {
