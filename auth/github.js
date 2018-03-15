@@ -12,7 +12,7 @@ passport.use(new GitHubStrategy(
     scope: 'user:email'
   },
   (accessToken, refreshToken, profile, done) => {
-    db.User.findOrCreate({
+    db.updateOrCreate(db.User, {
       where: {
         provider: 'github',
         providerId: profile.id
@@ -24,7 +24,7 @@ passport.use(new GitHubStrategy(
         refreshToken
       }
     })
-    .spread((user, created) => done(null, user))
+    .then(user => done(null, user))
   }
 ))
 

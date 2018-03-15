@@ -13,7 +13,7 @@ passport.use(new GoogleStrategy(
     scope: 'profile email openid'
   },
   (accessToken, refreshToken, profile, done) => {
-    db.User.findOrCreate({
+    db.updateOrCreate(db.User, {
       where: {
         provider: 'google',
         providerId: profile.id
@@ -25,7 +25,9 @@ passport.use(new GoogleStrategy(
         refreshToken
       }
     })
-    .spread((user, created) => done(null, user))
+    .then(user => {
+      done(null, user)
+    })
   }
 ))
 
