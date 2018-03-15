@@ -6,8 +6,6 @@ const bodyParser = require('body-parser')
 const cacheController = require('express-cache-controller')
 
 const authInit = require('./auth/init')
-const authRoutes = require('./auth/routes')
-const sitesRoutes = require('./sites/routes')
 const db = require('./db')
 const config = require('./config')
 
@@ -43,7 +41,9 @@ app.use(bodyParser.json())
 app.use(cacheController({ noCache: true, noStore: true, mustRevalidate: true }))
 
 // Routes
-app.use('/auth', authRoutes)
+app.enable('strict routing')
+
+app.use('/auth', require('./auth/routes'))
 
 // Require autentication for all requests to /api/
 app.use('/api', (req, res, next) => {
@@ -54,6 +54,6 @@ app.use('/api', (req, res, next) => {
   }
 })
 
-app.use('/api/sites', sitesRoutes)
+app.use('/api/sites', require('./sites/routes'))
 
 module.exports = app
