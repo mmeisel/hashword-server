@@ -19,7 +19,9 @@ passport.use(new GitHubStrategy(
       },
       defaults: {
         name: profile.displayName,
-        email: (profile.emails && profile.emails.length) ? profile.emails[0].value : null
+        email: (profile.emails && profile.emails.length) ? profile.emails[0].value : null,
+        accessToken,
+        refreshToken
       }
     })
     .spread((user, created) => done(null, user))

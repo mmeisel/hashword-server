@@ -6,14 +6,6 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         primaryKey: true
       },
-      provider: {
-        type: DataTypes.ENUM('github', 'google'),
-        allowNull: false
-      },
-      providerId: {
-        type: DataTypes.STRING(64),
-        allowNull: false
-      },
       name: {
         type: sequelize.getDialect() === 'mysql'
               ? 'VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci'
@@ -22,6 +14,21 @@ module.exports = (sequelize, DataTypes) => {
       },
       email: {
         type: DataTypes.STRING
+      },
+      provider: {
+        type: DataTypes.ENUM('github', 'google'),
+        allowNull: false
+      },
+      providerId: {
+        type: DataTypes.STRING(64),
+        allowNull: false
+      },
+      accessToken: {
+        type: DataTypes.STRING(255),
+        allowNull: false
+      },
+      refreshToken: {
+        type: DataTypes.STRING(255)
       }
     },
     {
