@@ -47,10 +47,10 @@ app.use('/auth', require('./auth/routes'))
 
 // Require autentication for all requests to /api/
 app.use('/api', (req, res, next) => {
-  if (req.user == null) {
-    res.status(403).json({ error: 'Not authenticated' })
-  } else {
+  if (req.isAuthenticated()) {
     next()
+  } else {
+    res.status(403).json({ error: 'Not authenticated' })
   }
 })
 

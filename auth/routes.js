@@ -4,15 +4,21 @@ const strategies = {
   google: require('./google')
 }
 
+router.get('/', (req, res) => {
+  res.sendFile('index.html', { root: __dirname })
+})
+
 Object.keys(strategies).forEach(strategyName => {
   const strategy = strategies[strategyName]
 
   router.get(`/${strategyName}`, strategy.authenticate(strategyName))
 
-  router.get(`/${strategyName}/callback`, strategy.authenticate(strategyName, {
-    successRedirect: '../success',
-    failureRedirect: '../fail'
-  }))
+  router.get(`/${strategyName}/callback`,
+    strategy.authenticate(strategyName, { failureRedirect: '../fail' }),
+    // Due to a bug in express, we must explicitly save the session here. See
+    // https://github.com/expressjs/session/pull/69
+    (req, res) => req.session.save(() => res.redirect('../success'))
+  )
 })
 
 router.get('/fail', (req, res) => {
