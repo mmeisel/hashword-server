@@ -8,7 +8,7 @@ const sequelize = new Sequelize(config.database.uri, {
 
 const db = {
   sequelize,
-  User: sequelize.import('./users/user.model.js'),
+  User: sequelize.import('./user/user.model.js'),
   Site: sequelize.import('./sites/site.model.js'),
   // Helpers
   updateOrCreate (model, options) {

@@ -56,4 +56,6 @@ app.use('/api', (req, res, next) => {
 
 app.use('/api/sites', require('./sites/routes'))
 
+app.use('/api/user', require('./user/routes'))
+
 module.exports = app
