@@ -1,10 +1,9 @@
 const passport = require('passport')
 const GitHubStrategy = require('passport-github2').Strategy
-
 const db = require('../db')
 const config = require('../config')
 
-passport.use(new GitHubStrategy(
+const strategy = new GitHubStrategy(
   {
     clientID: config.github.clientID,
     clientSecret: config.github.clientSecret,
@@ -24,6 +23,8 @@ passport.use(new GitHubStrategy(
     })
     .then(user => done(null, user))
   }
-))
+)
 
-module.exports = passport
+passport.use(strategy)
+
+module.exports = strategy

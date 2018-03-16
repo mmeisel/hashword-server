@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const passport = require('passport')
 const strategies = {
   github: require('./github'),
   google: require('./google')
@@ -9,12 +10,10 @@ router.get('/', (req, res) => {
 })
 
 Object.keys(strategies).forEach(strategyName => {
-  const strategy = strategies[strategyName]
-
-  router.get(`/${strategyName}`, strategy.authenticate(strategyName))
+  router.get(`/${strategyName}`, passport.authenticate(strategyName))
 
   router.get(`/${strategyName}/callback`,
-    strategy.authenticate(strategyName, { failureRedirect: '../fail' }),
+    passport.authenticate(strategyName, { failureRedirect: '../fail' }),
     // Due to a bug in express, we must explicitly save the session here. See
     // https://github.com/expressjs/session/pull/69
     (req, res) => req.session.save(() => res.redirect('../'))

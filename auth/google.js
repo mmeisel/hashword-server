@@ -1,10 +1,9 @@
 const passport = require('passport')
 const GoogleStrategy = require('passport-google-oauth20').Strategy
-
 const db = require('../db')
 const config = require('../config')
 
-passport.use(new GoogleStrategy(
+const strategy = new GoogleStrategy(
   {
     clientID: config.google.clientID,
     clientSecret: config.google.clientSecret,
@@ -27,6 +26,8 @@ passport.use(new GoogleStrategy(
       done(null, user)
     })
   }
-))
+)
 
-module.exports = passport
+passport.use(strategy)
+
+module.exports = strategy
