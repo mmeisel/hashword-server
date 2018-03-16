@@ -5,7 +5,7 @@ const strategies = {
 }
 
 router.get('/', (req, res) => {
-  res.sendFile('index.html', { root: __dirname })
+  res.sendFile(req.isAuthenticated() ? 'success.html' : 'login.html', { root: __dirname })
 })
 
 Object.keys(strategies).forEach(strategyName => {
@@ -17,7 +17,7 @@ Object.keys(strategies).forEach(strategyName => {
     strategy.authenticate(strategyName, { failureRedirect: '../fail' }),
     // Due to a bug in express, we must explicitly save the session here. See
     // https://github.com/expressjs/session/pull/69
-    (req, res) => req.session.save(() => res.redirect('../success'))
+    (req, res) => req.session.save(() => res.redirect('../'))
   )
 })
 
