@@ -24,14 +24,4 @@ router.get('/fail', (req, res) => {
   res.status(403).json({ error: 'Login failed' })
 })
 
-router.get('/success', (req, res) => {
-  res.json({
-    user: {
-      name: req.user.name,
-      email: req.user.email,
-      provider: req.user.provider
-    }
-  })
-})
-
 module.exports = router
