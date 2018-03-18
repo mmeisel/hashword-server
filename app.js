@@ -45,6 +45,14 @@ app.enable('strict routing')
 
 app.use('/auth', require('./auth/routes'))
 
+// Allow anyone to send AJAX requests to API endpoints
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  // Access-Control-Allow-Methods?
+  res.setHeader('Access-Control-Allow-Credentials', true)
+  next()
+})
+
 // Require autentication for all requests to /api/
 app.use('/api', (req, res, next) => {
   if (req.isAuthenticated()) {
