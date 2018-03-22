@@ -10,6 +10,7 @@ const db = {
   sequelize,
   User: sequelize.import('./user/user.model.js'),
   Site: sequelize.import('./sites/site.model.js'),
+  Token: sequelize.import('./auth/token.model.js'),
   // Helpers
   updateOrCreate (model, options) {
     return sequelize.transaction(transaction => {
@@ -28,5 +29,6 @@ const db = {
 }
 
 db.User.associate(db)
+db.Token.associate(db)
 
 module.exports = db

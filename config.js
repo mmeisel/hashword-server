@@ -1,5 +1,4 @@
 const convict = require('convict')
-const validator = require('validator')
 
 require('dotenv').config()
 
@@ -30,11 +29,14 @@ const config = convict({
   },
   session: {
     maxAge: {
-      format: val => {
-        val === null || validator.isInt(val, { gt: 0 })
-      },
-      default: null,
+      format: 'nat',
+      default: 120000,
       env: 'SESSION_MAX_AGE'
+    },
+    secure: {
+      format: Boolean,
+      default: true,
+      env: 'SESSION_SECURE'
     },
     secret: {
       format: String,

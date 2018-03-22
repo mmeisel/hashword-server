@@ -17,17 +17,19 @@
   },
   "dependencies": {
     "body-parser": "^1.18.2",
-    "connect-session-sequelize": "^5.1.0",
     "convict": "^4.0.2",
     "dotenv": "^5.0.0",
     "express": "^4.16.2",
     "express-cache-controller": "^1.1.0",
     "express-session": "^1.15.6",
+    "memorystore": "^1.6.0",
     "mysql2": "^1.5.1",
     "passport": "^0.4.0",
     "passport-github2": "^0.1.11",
     "passport-google-oauth20": "^1.0.0",
+    "passport-http-bearer": "^1.0.1",
     "sequelize": "^4.28.6",
-    "sqlite3": "^3.1.13"
+    "sqlite3": "^3.1.13",
+    "uid-safe": "^2.1.5"
   }
 }
