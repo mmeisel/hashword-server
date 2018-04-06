@@ -35,7 +35,9 @@ const utils = {
       cookie: {
         maxAge: config.session.maxAge,
         secure: config.session.secure
-      }
+      },
+      resave: true,
+      saveUninitialized: true
     }))
     app.use(path, passport.session())
 
