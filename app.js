@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const cacheController = require('express-cache-controller')
+const cors = require('cors')
 const passport = require('passport')
 
 const authUtils = require('./auth/utils')
@@ -14,9 +15,15 @@ db.sequelize.authenticate()
 .catch(err => console.error('Unable to connect to the database:', err))
 
 // Middleware
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cacheController({ noCache: true, noStore: true, mustRevalidate: true }))
+
+// Only enable CORS for API endpoints
+const corsOptions = { origin: true, credentials: true }
+app.use('/api', cors(corsOptions))
+app.options('/api/*', cors(corsOptions))
 
 // Authentication
 authUtils.init('/auth', app)
@@ -25,14 +32,6 @@ authUtils.init('/auth', app)
 app.enable('strict routing')
 
 app.use('/auth', require('./auth/routes'))
-
-// Allow anyone to send AJAX requests to API endpoints
-app.use('/api', (req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*')
-  // Access-Control-Allow-Methods?
-  res.setHeader('Access-Control-Allow-Credentials', true)
-  next()
-})
 
 // Require autentication for all requests to /api
 app.use('/api', passport.authenticate('bearer', { session: false }))
