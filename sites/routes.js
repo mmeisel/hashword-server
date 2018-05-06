@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const sequelize = require('../db')
+const db = require('../db')
 const service = require('./service')
 
 router.get('', (req, res) => {
@@ -21,10 +21,10 @@ router.get('', (req, res) => {
 // This is the main sync endpoint. It should be called with all domains that need to be synced, as
 // determined by a call to the GET endpoint.
 router.patch('', (req, res) => {
-  // TODO: validate body format (either here or in the service)
-  sequelize.transaction(transaction => {
-    service.sync(req.user.id, req.body, { transaction })
-  })
+  // TODO: validate body format (either here or in the service, maybe with flow?)
+  db.sequelize.transaction(transaction => (
+    service.sync(req.user.id, req.body, { transaction }))
+  )
   .then(result => res.json(result))
   .catch(error => res.json({ error }))
 })
