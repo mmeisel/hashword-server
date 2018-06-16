@@ -16,8 +16,8 @@ module.exports = (sequelize, DataTypes) => {
       },
       name: {
         type: sequelize.getDialect() === 'mysql'
-              ? 'VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci'
-              : DataTypes.STRING(255),
+          ? 'VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci'
+          : DataTypes.STRING(255),
         allowNull: false
       },
       email: {

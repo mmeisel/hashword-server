@@ -39,8 +39,8 @@ module.exports = (sequelize, DataTypes) => {
       },
       notes: {
         type: sequelize.getDialect() === 'mysql'
-              ? 'TEXT CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci'
-              : DataTypes.TEXT,
+          ? 'TEXT CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci'
+          : DataTypes.TEXT,
         allowNull: false
       },
       rev: {
