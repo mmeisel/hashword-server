@@ -2,7 +2,6 @@ const Sequelize = require('sequelize')
 const config = require('./config')
 
 const sequelize = new Sequelize(config.database.uri, {
-  password: config.database.password,
   operatorsAliases: {}
 })
 
