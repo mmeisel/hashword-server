@@ -7,7 +7,7 @@ const strategy = new GoogleStrategy(
   {
     clientID: config.google.clientID,
     clientSecret: config.google.clientSecret,
-    callbackURL: 'http://localhost:3000/auth/google/callback',
+    callbackURL: `${config.baseURL}/auth/google/callback`,
     userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo',
     scope: 'profile email openid'
   },

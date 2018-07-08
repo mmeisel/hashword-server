@@ -3,6 +3,12 @@ const convict = require('convict')
 require('dotenv').config()
 
 const config = convict({
+  baseURL: {
+    doc: 'The URL on which this service is exposed',
+    format: 'url',
+    default: null,
+    env: 'BASE_URL'
+  },
   env: {
     doc: 'The application environment.',
     format: ['production', 'development', 'test'],
