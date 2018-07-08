@@ -1,8 +1,13 @@
 const clients = {
-  chrome: {
-    id: 'chrome',
+  nkdpamnjhdjoncifjaoojhmfdmdknamo: {
+    id: 'nkdpamnjhdjoncifjaoojhmfdmdknamo',
     name: 'Chrome Extension',
     redirectUri: 'https://nkdpamnjhdjoncifjaoojhmfdmdknamo.chromiumapp.org/'
+  },
+  iailbghijpfcekclheinallemingccoc: {
+    id: 'iailbghijpfcekclheinallemingccoc',
+    name: 'Chrome Extension BETA',
+    redirectUri: 'https://iailbghijpfcekclheinallemingccoc.chromiumapp.org/'
   }
 }
 

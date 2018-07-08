@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       },
       clientId: {
-        type: DataTypes.ENUM('chrome', 'ios', 'android'),
+        type: DataTypes.STRING(64),
         allowNull: false
       }
     },
