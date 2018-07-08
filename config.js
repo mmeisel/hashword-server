@@ -39,11 +39,6 @@ const config = convict({
       default: 120000,
       env: 'SESSION_MAX_AGE'
     },
-    secure: {
-      format: Boolean,
-      default: true,
-      env: 'SESSION_SECURE'
-    },
     secret: {
       format: String,
       default: null,

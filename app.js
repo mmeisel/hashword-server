@@ -14,6 +14,11 @@ db.sequelize.authenticate()
 .then(() => console.log('Connection has been established successfully.'))
 .catch(err => console.error('Unable to connect to the database:', err))
 
+// Trust the first proxy in production, this will always run behind a web server
+if (app.get('env') === 'production') {
+  app.set('trust proxy', 1)
+}
+
 // Middleware
 
 app.use(bodyParser.json())

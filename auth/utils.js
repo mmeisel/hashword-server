@@ -34,7 +34,7 @@ const utils = {
       store: new MemoryStore({ checkPeriod: 3600000 }),
       cookie: {
         maxAge: config.session.maxAge,
-        secure: config.session.secure
+        secure: 'auto'
       },
       resave: true,
       saveUninitialized: true
