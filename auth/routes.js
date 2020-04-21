@@ -30,15 +30,13 @@ Object.keys(strategies).forEach(strategyName => {
             token
           },
           { fields: ['token'] }
-        )
-        .then(() => {
+        ).then(() => {
           // Sessions are only needed to complete the authentication process,
           // we can get rid of it now
           req.session.destroy()
           res.redirect(`${redirectUri}#${token}`)
         })
-      })
-      .catch(error => {
+      }).catch(error => {
         console.error(error)
 
         req.session.destroy()

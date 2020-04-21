@@ -10,9 +10,9 @@ const db = require('./db')
 
 // Test the database connection
 db.sequelize.authenticate()
-.then(() => db.sequelize.sync())
-.then(() => console.log('Connection has been established successfully.'))
-.catch(err => console.error('Unable to connect to the database:', err))
+  .then(() => db.sequelize.sync())
+  .then(() => console.log('Connection has been established successfully.'))
+  .catch(err => console.error('Unable to connect to the database:', err))
 
 // Trust the first proxy in production, this will always run behind a web server
 if (app.get('env') === 'production') {

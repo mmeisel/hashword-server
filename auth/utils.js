@@ -55,15 +55,13 @@ const utils = {
         return db.Token.findOne({
           where: { token: accessToken },
           include: [{ model: db.User, required: true }]
-        })
-        .then(token => {
+        }).then(token => {
           if (token) {
             done(null, token.user, { scope: '*' })
           } else {
             done(null, false)
           }
-        })
-        .catch(error => done(error))
+        }).catch(error => done(error))
       }
     ))
   }

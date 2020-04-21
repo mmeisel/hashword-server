@@ -22,9 +22,7 @@ const strategy = new GoogleStrategy(
         email: profile.emails.length ? profile.emails[0].value : null
       }
     })
-    .then(user => {
-      done(null, user)
-    })
+      .then(user => done(null, user))
   }
 )
 

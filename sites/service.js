@@ -25,8 +25,7 @@ siteService.get = (userId, options = {}) => {
       attributes
     }],
     transaction: options.transaction
-  })
-  .then(user => {
+  }).then(user => {
     if (user == null) {
       throw new Error('Invalid user')
     }
@@ -48,8 +47,7 @@ siteService.sync = (userId, remoteSiteMap, options = {}) => {
       attributes: { exclude: ['createdAt', 'updatedAt'] }
     }],
     transaction: options.transaction
-  })
-  .then(user => {
+  }).then(user => {
     if (user == null) {
       throw new Error('Invalid user')
     }

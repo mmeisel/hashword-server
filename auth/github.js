@@ -21,7 +21,7 @@ const strategy = new GitHubStrategy(
         email: (profile.emails && profile.emails.length) ? profile.emails[0].value : null
       }
     })
-    .then(user => done(null, user))
+      .then(user => done(null, user))
   }
 )
 
