@@ -5,12 +5,12 @@ const service = require('./service')
 router.get('', (req, res) => {
   // By default, only return the domains and their revs. Only if the "settings" request parameter is
   // present (with any value), return all of the settings details, too.
-  let includeSettings = req.query.hasOwnProperty('settings')
+  const includeSettings = 'settings' in req.query
   let domains = null
 
   // If there is a list of domains in the query string, return only those domains. The query
   // parameter "d" is used to reduce the chance of reaching the URL character limit
-  if (req.query.hasOwnProperty('d')) {
+  if ('d' in req.query) {
     domains = Array.isArray(req.query.d) ? req.query.d : [req.query.d]
   }
 

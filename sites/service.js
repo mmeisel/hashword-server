@@ -3,7 +3,7 @@ const db = require('../db')
 const siteService = {}
 
 siteService.get = (userId, options = {}) => {
-  let where = { userId }
+  const where = { userId }
   let attributes
 
   if (options.domains) {
@@ -76,7 +76,7 @@ siteService.sync = (userId, remoteSiteMap, options = {}) => {
 
     // Look for remote sites that we don't have locally
     Object.keys(remoteSiteMap).forEach(remoteDomain => {
-      if (!localOnly.hasOwnProperty(remoteDomain) && !matches.hasOwnProperty(remoteDomain)) {
+      if (!(remoteDomain in localOnly) && !(remoteDomain in matches)) {
         remoteOnly[remoteDomain] = remoteSiteMap[remoteDomain]
       }
     })
