@@ -38,7 +38,7 @@ app.enable('strict routing')
 
 app.use('/auth', require('./auth/routes'))
 
-// Require autentication for all requests to /api
+// Require authentication for all requests to /api
 app.use('/api', passport.authenticate('bearer', { session: false }))
 
 app.use('/api/sites', require('./sites/routes'))
