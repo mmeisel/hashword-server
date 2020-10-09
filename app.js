@@ -44,4 +44,13 @@ app.use('/api', passport.authenticate('bearer', { session: false }))
 app.use('/api/sites', require('./sites/routes'))
 app.use('/api/user', require('./user/routes'))
 
+// Error handler
+app.use((err, req, res, next) => {
+  if (res.headersSent) {
+    return next(err)
+  }
+  res.status(500)
+  res.json({ error: err })
+})
+
 module.exports = app

@@ -133,7 +133,7 @@ siteService.sync = (userId, remoteSiteMap, options = {}) => {
       if (db.Site.sequelize.getDialect() === 'mysql') {
         // Only MySQL supports the updateOnDuplicate option
         promise = db.Site.bulkCreate(localUpdates, {
-          updateOnDuplicate: true,
+          updateOnDuplicate: Object.keys(db.Site.rawAttributes),
           transaction: options.transaction
         })
       } else {

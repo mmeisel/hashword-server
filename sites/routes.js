@@ -20,13 +20,13 @@ router.get('', (req, res) => {
 
 // This is the main sync endpoint. It should be called with all domains that need to be synced, as
 // determined by a call to the GET endpoint.
-router.patch('', (req, res) => {
+router.patch('', (req, res, next) => {
   // TODO: validate body format (either here or in the service, maybe with TypeScript?)
   db.sequelize.transaction(transaction => (
     service.sync(req.user.id, req.body, { transaction }))
   )
     .then(result => res.json(result))
-    .catch(error => res.json({ error }))
+    .catch(error => next(error))
 })
 
 module.exports = router
